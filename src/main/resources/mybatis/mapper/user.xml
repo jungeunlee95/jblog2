@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+	<select id="getById" parameterType="string" resultType="uservo">
+    <![CDATA[
+    select id, name, password, reg_date regDate 
+    from user where id= #{id }
+	 ]]>	
+	</select>
+	
+	<insert id="insertUser" parameterType="uservo">
+    <![CDATA[
+    insert into user values(#{id }, #{name }, #{password }, now())
+	 ]]>
+	</insert>
+
+	<insert id="insertBlog" parameterType="uservo">
+    <![CDATA[
+    insert into blog values(#{id }, concat(#{name },"의 블로그"), "기본로고")
+	 ]]>
+	</insert>
+	
+	<delete id="deleteBlog" parameterType="string">
+	<![CDATA[
+    delete from blog where blog_id=#{id }
+	 ]]>
+	</delete>
+	
+	<delete id="deleteUser" parameterType="string">
+	<![CDATA[
+    delete from user where id=#{id }
+	 ]]>
+	</delete>
+</mapper>

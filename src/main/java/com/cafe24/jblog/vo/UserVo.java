@@ -1,12 +1,12 @@
 package com.cafe24.jblog.vo;
 
-import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class UserVo {
 
-	@Email
 	@NotBlank
+	@Length(min=4)
 	private String id;
 	@NotBlank
 	private String name;
