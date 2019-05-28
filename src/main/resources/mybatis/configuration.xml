@@ -4,9 +4,13 @@
 
 	<typeAliases>
 		<typeAlias alias="uservo" type="com.cafe24.jblog.vo.UserVo" />
+		<typeAlias alias="blogvo" type="com.cafe24.jblog.vo.BlogVo" />
+		<typeAlias alias="categoryvo" type="com.cafe24.jblog.vo.CategoryVo" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mapper/user.xml" />
+		<mapper resource="mybatis/mapper/blog.xml" />
+		<mapper resource="mybatis/mapper/category.xml" />
 	</mappers>
 </configuration>

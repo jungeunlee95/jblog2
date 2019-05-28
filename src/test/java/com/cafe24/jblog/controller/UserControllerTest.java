@@ -18,6 +18,7 @@ public class UserControllerTest {
 	@Autowired
 	private UserService userService;
 
+	// 회원가입, 로그인, 회원탈퇴 테스트
 	@Test
 	public void joinUserTest() {
 		UserVo vo = new UserVo();

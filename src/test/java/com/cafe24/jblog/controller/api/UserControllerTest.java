@@ -19,7 +19,8 @@ public class UserControllerTest {
 	@Autowired
 	private UserService userService;
 
-//	@Test
+	// id 중복 확인 test
+	@Test
 	public void existId() {
 		UserVo vo = new UserVo();
 		vo.setId("test");

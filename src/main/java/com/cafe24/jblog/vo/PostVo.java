@@ -15,7 +15,6 @@ public class PostVo {
 
 	public PostVo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getNo() {
