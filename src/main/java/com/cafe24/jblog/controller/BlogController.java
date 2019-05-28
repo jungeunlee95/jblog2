@@ -1,6 +1,7 @@
 package com.cafe24.jblog.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,16 +20,23 @@ import com.cafe24.security.Auth;
 import com.cafe24.security.AuthUser;
 
 @Controller
+@RequestMapping("/{userId:(?!assets).*}")
 public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
+	
 	@Autowired
 	private FileuploadService fileuploadService;
 	
-	@RequestMapping(value = {"/{userId}"})
+	@RequestMapping(value = {"","/{pathNo1}","/{pathNo1}/{pathNo2}" })
 	public String blogMain(@PathVariable(value = "userId") String userId,
+						@PathVariable(value = "pathNo1") Optional<Long> pathNo1,
+						@PathVariable(value = "pathNo2") Optional<Long> pathNo2,
 						Model model) {
+		Long categoryNo = 0L;
+		Long postNo = 0L;
+		
 		BlogVo vo = blogService.getBlogInfo(userId);
 		if(vo==null) {
 			return "error/404";
@@ -42,7 +50,7 @@ public class BlogController {
 	}
 	
 	@Auth
-	@RequestMapping(value = {"/{userId}/admin/basic"})
+	@RequestMapping(value = {"/admin/basic"})
 	public String blogAdmin(@AuthUser UserVo authUser,
 			@PathVariable(value = "userId") String userId,
 			Model model) {
@@ -63,7 +71,7 @@ public class BlogController {
 	}
 	
 	@Auth
-	@RequestMapping(value = {"/{userId}/admin/basic/modify"})
+	@RequestMapping(value = {"/admin/basic/modify"})
 	public String modifyBlogInfo(@AuthUser UserVo authUser,
 								@PathVariable(value = "userId") String userId,
 								@RequestParam(value="title") String title,

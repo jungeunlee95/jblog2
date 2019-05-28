@@ -42,9 +42,9 @@
 	<mvc:default-servlet-handler />
 	
 	<!-- the mvc resources tag does the magic  -->
-	<mvc:resources mapping="/images/**" location="file:/jblog-uploads" />
+	<mvc:resources mapping="assets/image/**" location="file:/jblog-uploads" />
 	
-	 <!-- MessageSource -->
+	 <!-- MessageSource --> 
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	   <property name="basenames">
 	      <list>
