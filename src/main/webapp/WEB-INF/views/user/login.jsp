@@ -13,10 +13,18 @@
 <body>
 	<div class="center-content">
 <c:import url="/WEB-INF/views/includes/header.jsp"> </c:import>
-		<form class="login-form">
-      		<label>아이디</label> <input type="text" name="id">
-      		<label>패스워드</label> <input type="text" name="password">
+		<form class="login-form" method="post"
+				action="${pageContext.servletContext.contextPath}/user/auth">
+      		<label>아이디</label> 
+      		<input type="text" name="id">
+      		
+      		<label>패스워드</label> 
+      		<input type="text" name="password">
       		<input type="submit" value="로그인">
+      		
+  			<c:if test="${result == 'fail' }">
+				<p style="color:red;">아이디 혹은 비밀번호가 잘못되었습니다.</p>
+			</c:if>
 		</form>
 	</div>
 </body>

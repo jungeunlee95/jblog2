@@ -32,5 +32,9 @@ public class UserService {
 		UserVo userVo = userDao.get(userId);
 		return userVo != null;
 	}
+	
+	public UserVo getUser(UserVo userVo) {
+		return userDao.get(userVo);
+	}
 
 }

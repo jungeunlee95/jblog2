@@ -32,10 +32,10 @@
 			</bean>
 		</mvc:message-converters>
 		
-		<!-- Argument Resolver 
+		<!-- Argument Resolver -->
 		<mvc:argument-resolvers>
 			<bean class="com.cafe24.security.AuthUserHandlerMethodArgumentResolver"/>
-		</mvc:argument-resolvers>-->
+		</mvc:argument-resolvers>
 	</mvc:annotation-driven> 
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러  -->
@@ -53,7 +53,7 @@
 	   </property> 
 	</bean>
 
-	<!-- Interceptors 
+	<!-- Interceptors  -->
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth" />
@@ -70,7 +70,7 @@
 			<mvc:exclude-mapping path="/assets/**"/>
 			<bean class="com.cafe24.security.AuthInterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors>  -->
+	</mvc:interceptors> 
 	
 	
 	<!-- ViewResolver 설정  -->

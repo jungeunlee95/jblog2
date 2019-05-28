@@ -14,8 +14,11 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public UserVo get(String id) {
-		System.out.println("******" + sqlSession.selectOne("user.getById", id));
 		return sqlSession.selectOne("user.getById", id);
+	}
+	
+	public UserVo get(UserVo vo) {
+		return sqlSession.selectOne("user.getLoginUser", vo);
 	}
 	
 	public boolean insertUser(UserVo vo) {

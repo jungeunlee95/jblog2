@@ -19,7 +19,7 @@ public class UserControllerTest {
 	@Autowired
 	private UserService userService;
 
-	@Test
+//	@Test
 	public void existId() {
 		UserVo vo = new UserVo();
 		vo.setId("test");
