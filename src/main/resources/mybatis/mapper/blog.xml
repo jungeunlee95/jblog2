@@ -24,4 +24,32 @@
 	insert into post values(null, #{title }, #{content }, now(), #{categoryNo })
 	 ]]>	
 	</insert>
+	
+	<select id="mainPost" parameterType="string" resultType="postvo">
+	<![CDATA[
+		select no, title, content, reg_Date regDate, category_no categoryNo 
+		from post
+		where category_no = (select no from category where blog_id=#{id }
+							order by no
+							limit 1)
+		order by no desc
+	 ]]>	
+	</select>
+	
+	<select id="categoryPost" parameterType="long" resultType="postvo">
+	<![CDATA[
+		select no, title, content, reg_Date regDate, category_no categoryNo from post
+		where category_no = #{cateNo }
+		order by no desc
+	 ]]>	
+	</select>
+	
+	<select id="getPost" parameterType="map" resultType="string">
+	<![CDATA[
+		select content
+		from post
+		where category_no = #{cateNo }
+		and no = #{postNo }
+	 ]]>	
+	</select>
 </mapper>

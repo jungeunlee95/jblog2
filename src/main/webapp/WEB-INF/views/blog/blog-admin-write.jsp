@@ -30,7 +30,6 @@
 							</p>
 								
 				      			<select name="categoryNo">
-				      				<option value="-1">미분류</option>
 				      				<c:forEach items='${categoryList }' var='vo' varStatus='status'>	
 										<option value="${vo.no }">${vo.name }</option>	
 									</c:forEach>
@@ -39,7 +38,10 @@
 			      		</tr>
 			      		<tr>
 			      			<td class="t">내용</td>
-			      			<td><form:textarea path="content"/></td>
+			      			<td><form:textarea path="content"/>
+			      			<p style="font-weight: bold; color: red;text-align: left; padding: 0;">
+								<form:errors path="content"/>
+							</p></td>
 			      		</tr>
 			      		<tr>
 			      			<td>&nbsp;</td>

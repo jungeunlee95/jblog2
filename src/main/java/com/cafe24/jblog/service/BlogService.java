@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.jblog.repository.BlogDao;
 import com.cafe24.jblog.repository.CategoryDao;
+import com.cafe24.jblog.repository.PostDao;
 import com.cafe24.jblog.vo.BlogVo;
 import com.cafe24.jblog.vo.CategoryVo;
 import com.cafe24.jblog.vo.PostVo;
@@ -17,6 +18,8 @@ public class BlogService {
 	@Autowired
 	private BlogDao blogDao;
 	@Autowired
+	private PostDao postDao;
+	@Autowired
 	private CategoryDao categoryDao;
 	
 	public BlogVo getBlogInfo(String userId) {
@@ -25,6 +28,18 @@ public class BlogService {
 	
 	public List<CategoryVo> getCategory(String userId) {
 		return categoryDao.getCategory(userId);
+	}
+	
+	public List<PostVo> mainPost(String userId) {
+		return postDao.mainPost(userId);
+	}
+	
+	public List<PostVo> categoryPost(Long cateNo) {
+		return postDao.categoryPost(cateNo);
+	}
+	
+	public String getPost(Long cateNo, Long postNo) {
+		return postDao.getPost(cateNo, postNo);
 	}
 	
 	public Boolean addCategory(CategoryVo vo) {

@@ -47,21 +47,24 @@ public class BlogController {
 		if(pathNo2.isPresent()) { // 카테고리의 글
 			postNo = pathNo2.get();
 			categoryNo = pathNo1.get();
-			System.out.println("2222" + postNo + categoryNo);
+			model.addAttribute("currentPost", blogService.getPost(categoryNo, postNo));
+			model.addAttribute("postList", blogService.categoryPost(categoryNo));			
 		}else if (pathNo1.isPresent()) { // 카테고리만
 			categoryNo = pathNo1.get();
-			postNo = null;
-			System.out.println("1111" + postNo + categoryNo);
+			model.addAttribute("postList", blogService.categoryPost(categoryNo));			
 		}else {
-			BlogVo vo = blogService.getBlogInfo(userId);
-			if(vo==null) {
-				return "error/404";
-			}
-			List<CategoryVo> cvoList = blogService.getCategory(userId);
-			
-			model.addAttribute("blogVo", vo);
-			model.addAttribute("categoryList", cvoList);
+			model.addAttribute("postList", blogService.mainPost(userId));			
 		}
+		
+		BlogVo vo = blogService.getBlogInfo(userId);
+		if(vo==null) {
+			return "error/404";
+		}
+		List<CategoryVo> cvoList = blogService.getCategory(userId);
+		
+		model.addAttribute("blogVo", vo);		
+		model.addAttribute("categoryList", cvoList);
+		
 		return "blog/blog-main";
 	}
 	
@@ -221,8 +224,9 @@ public class BlogController {
 			return "error/404";
 		}
 		model.addAttribute("blogVo", vo);
-		
-		blogService.writePost(postVo);		
+
+		blogService.writePost(postVo);
+
 		return "redirect:/" + userId; 
 	}
 	

@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cafe24.jblog.repository.BlogDao;
 import com.cafe24.jblog.repository.CategoryDao;
+import com.cafe24.jblog.repository.PostDao;
 import com.cafe24.jblog.vo.CategoryVo;
 import com.cafe24.jblog.vo.PostVo;
 
@@ -24,6 +25,8 @@ public class BlogServiceTest {
 	private BlogDao blogDao;
 	@Autowired
 	private CategoryDao categoryDao;
+	@Autowired
+	private PostDao postDao;
 
 	// 카테고리 가져오기
 //		@Test
@@ -51,7 +54,7 @@ public class BlogServiceTest {
 		assertEquals(categoryDao.deleteCategory(11L), true);
 	}
 	
-	@Test
+//	@Test
 	public void writePost() {
 		PostVo vo = new PostVo();
 		vo.setTitle("test");
@@ -60,6 +63,14 @@ public class BlogServiceTest {
 		
 		assertEquals(blogDao.writePost(vo), true);
 		
+	}
+	
+//	@Test
+	public void mainPost() {
+		List<PostVo> list = postDao.mainPost("jjjj");
+		for(PostVo vo : list) {
+			System.out.println(vo.toString());
+		}
 	}
 
 

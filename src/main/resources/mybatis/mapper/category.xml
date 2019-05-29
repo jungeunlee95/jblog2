@@ -4,7 +4,7 @@
 
 	<insert id="insert" parameterType="string">
     <![CDATA[
-    insert into category values(null, "전체글", "전체글보기", now(), #{userId })
+    insert into category values(null, "미분류", "미분류", now(), #{userId })
 	 ]]>	
 	</insert>
 	
@@ -22,7 +22,7 @@
 	on c.no = p.category_no 
 	where c.blog_id=#{userId }
 	group by c.name
-	order by no desc
+	order by no
 	 ]]>	
 	</select>
 	
