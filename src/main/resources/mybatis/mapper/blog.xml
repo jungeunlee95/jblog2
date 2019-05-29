@@ -18,4 +18,10 @@
 	where blog_id = #{blogId }
 	 ]]>	
 	</update>
+
+	<insert id="wirtePost" parameterType="postvo">
+	<![CDATA[
+	insert into post values(null, #{title }, #{content }, now(), #{categoryNo })
+	 ]]>	
+	</insert>
 </mapper>

@@ -8,12 +8,34 @@
 	 ]]>	
 	</insert>
 	
+	<insert id="insertVo" parameterType="categoryvo">
+    <![CDATA[
+    insert into category values(null, #{name }, #{description }, now(), #{blogId })
+	 ]]>	
+	</insert>
+	
 	<select id="getList" parameterType="string" resultType="categoryvo">
     <![CDATA[
-	select no, name, description, reg_date regDate, blog_id blogId 
-	from category
-	where blog_id=#{userId }
+	select c.no, c.name, c.description, c.reg_date regDate, c.blog_id blogId, count(p.category_no) count
+	from category c
+	left join post p
+	on c.no = p.category_no 
+	where c.blog_id=#{userId }
+	group by c.name
+	order by no desc
 	 ]]>	
 	</select>
+	
+	<delete id="deletePost" parameterType="long">
+	<![CDATA[
+    delete from post where category_no = #{no }
+	 ]]>
+	</delete>
+	
+	<delete id="deleteCategory" parameterType="long">
+	<![CDATA[
+    delete from category where no = #{no }
+	 ]]>
+	</delete>
 	
 </mapper>

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cafe24.jblog.vo.BlogVo;
+import com.cafe24.jblog.vo.PostVo;
 
 @Repository
 public class BlogDao {
@@ -19,4 +20,9 @@ public class BlogDao {
 	public Boolean modifyBlogInfo(BlogVo vo) {
 		return 1==sqlSession.update("blog.modifyBlogInfo", vo);
 	}
+	
+	public Boolean writePost(PostVo vo) {
+		return 1==sqlSession.insert("blog.wirtePost", vo);
+	}
+	
 }

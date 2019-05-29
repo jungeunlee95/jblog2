@@ -21,22 +21,22 @@ public class UserDao {
 		return sqlSession.selectOne("user.getLoginUser", vo);
 	}
 	
-	public boolean insertUser(UserVo vo) {
+	public Boolean insertUser(UserVo vo) {
 	    int count = sqlSession.insert("user.insertUser", vo);
 	    return 1==count;
 	}
 	
-	public boolean insertBlog(UserVo vo) {
+	public Boolean insertBlog(UserVo vo) {
 		int count = sqlSession.insert("user.insertBlog", vo);
 		return 1==count;
 	}
 	
-	public boolean deleteBlog(String id) {
+	public Boolean deleteBlog(String id) {
 		int count = sqlSession.delete("user.deleteBlog", id);
 		return 1==count;
 	}
 	
-	public boolean deleteUser(String id) {
+	public Boolean deleteUser(String id) {
 		int count = sqlSession.delete("user.deleteUser", id);
 		return 1==count;
 	}

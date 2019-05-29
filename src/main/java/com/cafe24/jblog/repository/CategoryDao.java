@@ -19,6 +19,18 @@ public class CategoryDao {
 		return 1==sqlSession.insert("category.insert", userId);
 	}
 	
+	public Boolean insert(CategoryVo vo) {
+		return 1==sqlSession.insert("category.insertVo", vo);
+	}
+	
+	public Boolean deletePost(Long no) {
+		return 1==sqlSession.delete("category.deletePost", no);
+	}
+	
+	public Boolean deleteCategory(Long no) {
+		return 1==sqlSession.delete("category.deleteCategory", no);
+	}
+	
 	public List<CategoryVo> getCategory(String userId) {
 		return sqlSession.selectList("category.getList", userId);
 	}

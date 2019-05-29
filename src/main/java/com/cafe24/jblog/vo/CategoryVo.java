@@ -11,8 +11,9 @@ public class CategoryVo {
 	@NotEmpty
 	private String description;
 	private String regDate;
-	@NotBlank
 	private String blogId;
+
+	private Long Count;
 
 	public CategoryVo() {
 		super();
@@ -59,10 +60,18 @@ public class CategoryVo {
 		this.blogId = blogId;
 	}
 
+	public Long getCount() {
+		return Count;
+	}
+
+	public void setCount(Long count) {
+		Count = count;
+	}
+
 	@Override
 	public String toString() {
-		return "Category [no=" + no + ", name=" + name + ", description=" + description + ", regDate=" + regDate
-				+ ", blogId=" + blogId + "]";
+		return "CategoryVo [no=" + no + ", name=" + name + ", description=" + description + ", regDate=" + regDate
+				+ ", blogId=" + blogId + ", Count=" + Count + "]";
 	}
 
 }

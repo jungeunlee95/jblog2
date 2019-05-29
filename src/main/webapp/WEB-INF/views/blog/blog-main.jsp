@@ -43,6 +43,7 @@
 		<div id="navigation">
 			<h2>카테고리</h2>
 			<ul>
+			<li><a href="">미분류</a></li>			
 			<c:forEach items='${categoryList }' var='vo' varStatus='status'>
 				<li><a href="">${vo.name }</a></li>			
 			</c:forEach>
