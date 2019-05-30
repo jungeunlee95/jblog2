@@ -12,6 +12,7 @@
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 <script src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
+var checkId = 0;
 	$(function(){
 		$('#id').change(function(){
 			$('#btn-checkid').show(); 
@@ -45,8 +46,15 @@
 						alert('이미 존재하는 id 입니다.');
 						$("#id").focus();
 						$("#id").val("");
+						if(checkId==1){
+							checkId=0;
+						}
 						return;
-					} 
+					} else{
+						if(checkId==0){
+							checkId=1;
+						}
+					}
 					$('#btn-checkid').hide();
 					$('#img-checkid').show();
 				},
@@ -56,6 +64,14 @@
 			});
 		});
 	});
+	
+	function doWrite() {
+		if (checkId == 0) {
+			alert('이메일 중복체크를 확인해주세요!');
+			$('#btn-checkid').focus();
+			return false;
+		}
+	}
 </script>
 </head>
 <body> 
@@ -66,7 +82,8 @@
 			  class="join-form" 
 			  id="join-form" 
 			  method="post" 
-			  action="${pageContext.servletContext.contextPath}/user/join">
+			  action="${pageContext.servletContext.contextPath}/user/join"
+			  onsubmit="return doWrite()">
 			<label class="block-label" for="name">이름</label>
 			<form:input path="name" />
 			<p style="font-weight: bold; color: red;text-align: left; padding: 0;">
