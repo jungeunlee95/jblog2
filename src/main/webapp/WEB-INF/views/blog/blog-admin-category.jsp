@@ -9,11 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
-<script src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
-<script type="text/javascript">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script> 
 	$(document).ready( function(){
-	    $("#btn_delete").click( function() {
-	        if(confirm("카테고리를 삭제하면 글까지 전부 삭제됩니다. 정말 삭제 하시겠습니까?")) {
+	    $(".btn_delete").click( function() {
+	        if(confirm("카테고리를 삭제하면 ")) {
 	            $(this).parent().click();
 	        } else {
 	            return false;
@@ -39,15 +39,17 @@
 		      		
 		      		<c:forEach items='${categoryList }' var='vo' varStatus='status'>
 						<tr>
-							<td>3</td>
+							<td>${vo.no }</td>
 							<td>${vo.name }</td>
 							<td>${vo.count }</td>
 							<td>${vo.description }</td>
 							<td>
+							<c:if test="${vo.name != '미분류' }">
 								<a href="${pageContext.request.contextPath}/${authUser.id }/admin/category/delete/${vo.no}" 
-								id="btn_delete">
+								class="btn_delete">
 									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-								</a>
+								</a> 
+							</c:if>
 							</td>
 						</tr>  		
 					</c:forEach>

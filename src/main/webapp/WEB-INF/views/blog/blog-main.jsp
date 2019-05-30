@@ -39,7 +39,7 @@
 		<div id="extra">
 			<div class="blog-logo">
 			<c:choose>
-			<c:when test="${blogVo.logo eq '기본로고'}">
+			<c:when test="${blogVo.logo eq '기본로고' || empty blogVo.logo || blogVo.logo==null}">
 				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCJSUZCemWAJrmJQaoDiPY7I2KcKVsUJL69QymDDkkUO3Fds30kw" 
 				style="width:100px; height: 100px;"><br>			
 			</c:when>

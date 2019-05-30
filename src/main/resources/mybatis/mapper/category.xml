@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="category">
 
+	<select id="get" parameterType="map" resultType="categoryvo">
+    <![CDATA[
+    select * from category 
+	where name=#{name }
+	and blog_id=#{id }
+	 ]]>	
+	</select>
+	
 	<insert id="insert" parameterType="string">
     <![CDATA[
     insert into category values(null, "미분류", "미분류", now(), #{userId })

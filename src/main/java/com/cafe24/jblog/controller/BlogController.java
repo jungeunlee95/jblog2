@@ -93,13 +93,27 @@ public class BlogController {
 	@Auth
 	@RequestMapping(value = {"/admin/basic/modify"})
 	public String modifyBlogInfo(@AuthUser UserVo authUser,
+								@ModelAttribute @Valid BlogVo blogVo, 
 								@PathVariable(value = "userId") String userId,
 								@RequestParam(value="title") String title,
 								@RequestParam(value="file") MultipartFile multipartFile,
+								BindingResult result,
 								Model model) {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
+		BlogVo bvo = blogService.getBlogInfo2(userId);
+		model.addAttribute("blogVo", bvo);
+		
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				System.out.println(error);
+			}
+			model.addAllAttributes(result.getModel());
+			return "blog/blog-admin-basic";
+		}
+		
 		String url = fileuploadService.restore(multipartFile);
 		BlogVo vo = new BlogVo();
 		vo.setBlogId(userId);
@@ -107,8 +121,6 @@ public class BlogController {
 		vo.setLogo(url);
 		blogService.modifyBlogInfo(vo);
 		
-		BlogVo bvo = blogService.getBlogInfo2(userId);
-		model.addAttribute("blogVo", bvo);
 		return "redirect:/" + userId; 
 	}
 	
@@ -142,6 +154,12 @@ public class BlogController {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
+
+		BlogVo vo = blogService.getBlogInfo2(userId);
+		if(vo==null) {
+			return "error/404";
+		}
+		model.addAttribute("blogVo", vo);
 		
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
@@ -149,14 +167,9 @@ public class BlogController {
 				System.out.println(error);
 			}
 			model.addAllAttributes(result.getModel());
-			return "/blog/blog-admin-category";
+			return "blog/blog-admin-category";
 		}
 		
-		BlogVo vo = blogService.getBlogInfo2(userId);
-		if(vo==null) {
-			return "error/404";
-		}
-		model.addAttribute("blogVo", vo);
 		categoryVo.setBlogId(userId);
 		blogService.addCategory(categoryVo);
 		model.addAttribute("categoryList", blogService.getCategory(userId));
@@ -215,22 +228,23 @@ public class BlogController {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.putAll(blogService.getBlogInfo(userId));
 		
+		if(map.get("blogVo")==null) {
+			return "error/404";
+		}
+		model.addAllAttributes(map);
+
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
 				System.out.println(error);
 			}
 			model.addAllAttributes(result.getModel());
-			return "/blog/blog-admin-category";
+			return "blog/blog-admin-write";
 		}
 		
-		BlogVo vo = blogService.getBlogInfo2(userId);
-		if(vo==null) {
-			return "error/404";
-		}
-		model.addAttribute("blogVo", vo);
-
 		blogService.writePost(postVo);
 
 		return "redirect:/" + userId; 

@@ -13,6 +13,7 @@ import com.cafe24.jblog.repository.PostDao;
 import com.cafe24.jblog.vo.BlogVo;
 import com.cafe24.jblog.vo.CategoryVo;
 import com.cafe24.jblog.vo.PostVo;
+import com.cafe24.jblog.vo.UserVo;
 
 @Service
 public class BlogService {
@@ -78,5 +79,10 @@ public class BlogService {
 	
 	public Boolean writePost(PostVo vo) {
 		return blogDao.writePost(vo);
+	}
+	
+	public Boolean existCate(String name, String userId) {
+		CategoryVo categoryVo = categoryDao.get(name, userId);
+		return categoryVo != null;
 	}
 }

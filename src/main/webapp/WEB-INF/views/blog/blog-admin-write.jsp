@@ -24,21 +24,21 @@
 			      		<tr>
 			      			<td class="t">제목</td>
 			      			<td>
+			      			<label class="block-label" for="title"></label>
 		      				<form:input path="title" />
+			      			<form:select  path="categoryNo">	
+								<form:options items="${categoryList }" itemLabel="name" itemValue="no"/>	
+			      			</form:select>
 		      				<p style="font-weight: bold; color: red;text-align: left; padding: 0;">
 								<form:errors path="title"/>
 							</p>
 								
-				      			<select name="categoryNo">
-				      				<c:forEach items='${categoryList }' var='vo' varStatus='status'>	
-										<option value="${vo.no }">${vo.name }</option>	
-									</c:forEach>
-				      			</select>
 				      		</td>
 			      		</tr>
 			      		<tr>
 			      			<td class="t">내용</td>
-			      			<td><form:textarea path="content"/>
+			      			<td><label class="block-label" for="content"></label>
+			      			<form:textarea path="content"/>
 			      			<p style="font-weight: bold; color: red;text-align: left; padding: 0;">
 								<form:errors path="content"/>
 							</p></td>

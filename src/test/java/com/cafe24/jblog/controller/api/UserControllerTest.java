@@ -1,6 +1,7 @@
 package com.cafe24.jblog.controller.api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -27,11 +28,11 @@ public class UserControllerTest {
 		vo.setName("테스트");
 		vo.setPassword("test");
 
-		assertEquals(userService.existId(vo.getId()), false);
+		assertFalse(userService.existId(vo.getId()));
 		userService.joinUser(vo);
-		assertEquals(userService.existId(vo.getId()), true);
+		assertFalse(userService.existId(vo.getId()));
 		userService.deleteUser(vo.getId());
-		assertEquals(userService.existId(vo.getId()), false);
+		assertFalse(userService.existId(vo.getId()));
 
 	}
 

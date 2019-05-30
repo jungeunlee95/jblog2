@@ -2,6 +2,7 @@ package com.cafe24.jblog.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -50,8 +51,8 @@ public class BlogServiceTest {
 	
 //	@Test
 	public void deleteCategory() {
-		assertEquals(categoryDao.deletePost(11L), true);
-		assertEquals(categoryDao.deleteCategory(11L), true);
+		assertTrue(categoryDao.deletePost(11L));
+		assertTrue(categoryDao.deleteCategory(11L));
 	}
 	
 //	@Test
@@ -61,7 +62,7 @@ public class BlogServiceTest {
 		vo.setContent("testtest");
 		vo.setCategoryNo(9L);
 		
-		assertEquals(blogDao.writePost(vo), true);
+		assertTrue(blogDao.writePost(vo));
 		
 	}
 	
@@ -71,6 +72,12 @@ public class BlogServiceTest {
 		for(PostVo vo : list) {
 			System.out.println(vo.toString());
 		}
+	}
+	
+//	@Test
+	public void existCate() {
+		CategoryVo vo = categoryDao.get("미분류","aaa");
+		System.out.println(vo);
 	}
 
 
