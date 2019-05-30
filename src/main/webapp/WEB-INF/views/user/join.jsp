@@ -12,7 +12,8 @@
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 <script src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
-var checkId = 0;
+
+	var checkId = 0;
 	$(function(){
 		$('#id').change(function(){
 			$('#btn-checkid').show(); 
@@ -65,7 +66,7 @@ var checkId = 0;
 		});
 	});
 	
-	function doWrite() {
+	function doJoin() {
 		if (checkId == 0) {
 			alert('이메일 중복체크를 확인해주세요!');
 			$('#btn-checkid').focus();
@@ -83,7 +84,7 @@ var checkId = 0;
 			  id="join-form" 
 			  method="post" 
 			  action="${pageContext.servletContext.contextPath}/user/join"
-			  onsubmit="return doWrite()">
+			  onsubmit="return doJoin()">
 			<label class="block-label" for="name">이름</label>
 			<form:input path="name" />
 			<p style="font-weight: bold; color: red;text-align: left; padding: 0;">

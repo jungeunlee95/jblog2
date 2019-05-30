@@ -44,8 +44,10 @@ public class BlogController {
 						@PathVariable(value = "pathNo1") Optional<Long> pathNo1,
 						@PathVariable(value = "pathNo2") Optional<Long> pathNo2,
 						Model model) {
+		
 		Long categoryNo = 0L;
 		Long postNo = 0L;
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(pathNo2.isPresent()) { // 카테고리의 글
@@ -97,9 +99,9 @@ public class BlogController {
 	@RequestMapping(value = {"/admin/basic/modify"})
 	public String modifyBlogInfo(@AuthUser UserVo authUser,
 								@ModelAttribute("blogVo") @Valid BlogVo blogVo, 
+								BindingResult result,
 								@PathVariable(value = "userId") String userId,
 								@RequestParam(value="file") MultipartFile multipartFile,
-								BindingResult result,
 								Model model) {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
@@ -152,8 +154,8 @@ public class BlogController {
 	@RequestMapping(value = {"/admin/category"}, method = RequestMethod.POST)
 	public String adminCategory(@AuthUser UserVo authUser,
 								@ModelAttribute @Valid CategoryVo categoryVo,
-								@PathVariable(value = "userId") String userId,
 								BindingResult result, 
+								@PathVariable(value = "userId") String userId,
 								Model model) {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
@@ -171,6 +173,7 @@ public class BlogController {
 				System.out.println(error);
 			}
 			model.addAllAttributes(result.getModel());
+			model.addAttribute("categoryList", blogService.getCategory(userId));
 			return "blog/blog-admin-category";
 		}
 		
@@ -229,8 +232,8 @@ public class BlogController {
 	@RequestMapping(value = {"/admin/write"}, method = RequestMethod.POST)
 	public String adminWrite(@AuthUser UserVo authUser,
 							@ModelAttribute @Valid PostVo postVo,
-							@PathVariable(value = "userId") String userId,
 							BindingResult result, 
+							@PathVariable(value = "userId") String userId,
 							Model model) {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
