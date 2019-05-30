@@ -1,6 +1,8 @@
 package com.cafe24.jblog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -43,27 +45,26 @@ public class BlogController {
 						Model model) {
 		Long categoryNo = 0L;
 		Long postNo = 0L;
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(pathNo2.isPresent()) { // 카테고리의 글
-			postNo = pathNo2.get();
+			postNo = pathNo2.get(); 
 			categoryNo = pathNo1.get();
-			model.addAttribute("currentPost", blogService.getPost(categoryNo, postNo));
-			model.addAttribute("postList", blogService.categoryPost(categoryNo));			
+			map.putAll(blogService.getCatePost(categoryNo, postNo));		
 		}else if (pathNo1.isPresent()) { // 카테고리만
 			categoryNo = pathNo1.get();
-			model.addAttribute("postList", blogService.categoryPost(categoryNo));			
+			map.put("postList", blogService.categoryPost(categoryNo));			
 		}else {
-			model.addAttribute("postList", blogService.mainPost(userId));			
+			map.put("postList", blogService.mainPost(userId));			
 		}
 		
-		BlogVo vo = blogService.getBlogInfo(userId);
-		if(vo==null) {
+		map.putAll(blogService.getBlogInfo(userId));
+		
+		if(map.get("blogVo")==null) {
 			return "error/404";
 		}
-		List<CategoryVo> cvoList = blogService.getCategory(userId);
-		
-		model.addAttribute("blogVo", vo);		
-		model.addAttribute("categoryList", cvoList);
+	
+		model.addAllAttributes(map);
 		
 		return "blog/blog-main";
 	}
@@ -71,20 +72,20 @@ public class BlogController {
 	@Auth
 	@RequestMapping(value = {"/admin/basic"})
 	public String blogAdmin(@AuthUser UserVo authUser,
-			@PathVariable(value = "userId") String userId,
-			Model model) {
+							@PathVariable(value = "userId") String userId,
+							Model model) {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
 		
-		BlogVo vo = blogService.getBlogInfo(userId);
-		if(vo==null) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.putAll(blogService.getBlogInfo(userId));
+		
+		if(map.get("blogVo")==null) {
 			return "error/404";
 		}
-		List<CategoryVo> cvoList = blogService.getCategory(userId);
-		
-		model.addAttribute("blogVo", vo);
-		model.addAttribute("categoryList", cvoList);
+	
+		model.addAllAttributes(map);
 		
 		return "blog/blog-admin-basic";
 	}
@@ -106,37 +107,39 @@ public class BlogController {
 		vo.setLogo(url);
 		blogService.modifyBlogInfo(vo);
 		
-		BlogVo bvo = blogService.getBlogInfo(userId);
+		BlogVo bvo = blogService.getBlogInfo2(userId);
 		model.addAttribute("blogVo", bvo);
-		return "blog/blog-main"; 
+		return "redirect:/" + userId; 
 	}
 	
 	@Auth
 	@RequestMapping(value = {"/admin/category"}, method = RequestMethod.GET)
 	public String adminCategory(@AuthUser UserVo authUser,
-			@ModelAttribute CategoryVo categoryVo,
-			Model model) {
-		String userId = authUser.getId(); 
+								@PathVariable(value = "userId") String userId,
+								@ModelAttribute CategoryVo categoryVo,
+								Model model) {
 		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
-		BlogVo vo = blogService.getBlogInfo(userId);
-		if(vo==null) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.putAll(blogService.getBlogInfo(userId));
+		
+		if(map.get("blogVo")==null) {
 			return "error/404";
 		}
-		model.addAttribute("blogVo", vo);
-		model.addAttribute("categoryList", blogService.getCategory(userId));
+
+		model.addAllAttributes(map);
 		return "blog/blog-admin-category"; 
 	}
 	
 	@Auth
 	@RequestMapping(value = {"/admin/category"}, method = RequestMethod.POST)
 	public String adminCategory(@AuthUser UserVo authUser,
-			@ModelAttribute @Valid CategoryVo categoryVo,
-			@PathVariable(value = "userId") String userId,
-			BindingResult result, 
-			Model model) {
-		if(!userId.equals(userId)){
+								@ModelAttribute @Valid CategoryVo categoryVo,
+								@PathVariable(value = "userId") String userId,
+								BindingResult result, 
+								Model model) {
+		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
 		
@@ -148,7 +151,8 @@ public class BlogController {
 			model.addAllAttributes(result.getModel());
 			return "/blog/blog-admin-category";
 		}
-		BlogVo vo = blogService.getBlogInfo(userId);
+		
+		BlogVo vo = blogService.getBlogInfo2(userId);
 		if(vo==null) {
 			return "error/404";
 		}
@@ -162,13 +166,14 @@ public class BlogController {
 	@Auth
 	@RequestMapping(value = {"/admin/category/delete/{no}"})
 	public String deleteCategory(@AuthUser UserVo authUser,
-			@PathVariable(value = "userId") String userId,
-			@PathVariable(value = "no") Long cateNo, 
-			Model model) {
-		if(!userId.equals(userId)){
+								@PathVariable(value = "userId") String userId,
+								@PathVariable(value = "no") Long cateNo, 
+								Model model) {
+		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
-		BlogVo vo = blogService.getBlogInfo(userId);
+		
+		BlogVo vo = blogService.getBlogInfo2(userId);
 		if(vo==null) {
 			return "error/404";
 		}
@@ -184,17 +189,18 @@ public class BlogController {
 							@PathVariable(value = "userId") String userId,
 							@ModelAttribute PostVo postVo,
 							Model model) {
-		if(!userId.equals(userId)){
+		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
-		BlogVo vo = blogService.getBlogInfo(userId);
-		if(vo==null) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.putAll(blogService.getBlogInfo(userId));
+		
+		if(map.get("blogVo")==null) {
 			return "error/404";
 		}
-		model.addAttribute("blogVo", vo);
-		
-		List<CategoryVo> cvoList = blogService.getCategory(userId);
-		model.addAttribute("categoryList", cvoList);
+	
+		model.addAllAttributes(map);
 
 		return "blog/blog-admin-write"; 
 	}
@@ -206,7 +212,7 @@ public class BlogController {
 							@PathVariable(value = "userId") String userId,
 							BindingResult result, 
 							Model model) {
-		if(!userId.equals(userId)){
+		if(!userId.equals(authUser.getId())){
 			return "redirect:/" + userId;
 		}
 		
@@ -219,7 +225,7 @@ public class BlogController {
 			return "/blog/blog-admin-category";
 		}
 		
-		BlogVo vo = blogService.getBlogInfo(userId);
+		BlogVo vo = blogService.getBlogInfo2(userId);
 		if(vo==null) {
 			return "error/404";
 		}

@@ -1,6 +1,8 @@
 package com.cafe24.jblog.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,21 @@ public class BlogService {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public BlogVo getBlogInfo(String userId) {
+	public Map<String,Object> getCatePost(Long cateNo, Long postNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("currentPost",postDao.getPost(cateNo, postNo));
+		map.put("postList", postDao.categoryPost(cateNo));
+		return map;
+	}
+	
+	public Map<String, Object> getBlogInfo(String userId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("blogVo", blogDao.getBlogInfo(userId));
+		map.put("categoryList", categoryDao.getCategory(userId));
+		return map;
+	}
+	
+	public BlogVo getBlogInfo2(String userId) {
 		return blogDao.getBlogInfo(userId);
 	}
 	
