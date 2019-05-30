@@ -23,7 +23,7 @@ public class PostDao {
 		return sqlSession.selectList("blog.categoryPost", cateNo);
 	}
 	
-	public String getPost(Long cateNo, Long postNo) {
+	public PostVo getPost(Long cateNo, Long postNo) {
 		Map<String, Long> map = new HashMap<String, Long>();
 		map.put("cateNo", cateNo);
 		map.put("postNo", postNo);

@@ -55,7 +55,7 @@ public class BlogService {
 		return postDao.categoryPost(cateNo);
 	}
 	
-	public String getPost(Long cateNo, Long postNo) {
+	public PostVo getPost(Long cateNo, Long postNo) {
 		return postDao.getPost(cateNo, postNo);
 	}
 	

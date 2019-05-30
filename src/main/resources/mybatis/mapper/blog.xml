@@ -44,9 +44,9 @@
 	 ]]>	
 	</select>
 	
-	<select id="getPost" parameterType="map" resultType="string">
+	<select id="getPost" parameterType="map" resultType="postvo">
 	<![CDATA[
-		select content
+		select content, title
 		from post
 		where category_no = #{cateNo }
 		and no = #{postNo }

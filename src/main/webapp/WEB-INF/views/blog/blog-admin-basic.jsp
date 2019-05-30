@@ -34,7 +34,25 @@
 			      		</tr>
 			      		<tr>
 			      			<td class="t">로고이미지</td>
-			      			<td><img id="image_section" src="#" alt="your image" /></td>      			
+			      			<td>
+			      			<c:choose>
+								<c:when
+									test="${blogVo.logo eq '기본로고' || empty blogVo.logo || blogVo.logo==null}">
+									<img id="image_section" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCJSUZCemWAJrmJQaoDiPY7I2KcKVsUJL69QymDDkkUO3Fds30kw"
+										style="width: 100px; height: 100px;">
+									<br>
+								</c:when>
+								<c:otherwise>
+									<img id="image_section" src="${pageContext.request.contextPath }/assets${blogVo.logo }"
+										style="width: 100px; height: 100px;">
+									<br>
+								</c:otherwise>
+							</c:choose> 
+			      			
+			      			<c:if test="${blogVo.logo != '기본로고' || not empty blogVo.logo || blogVo.logo != null}">
+								<form:hidden path="logo" value="${blogVo.logo }"/>			
+							</c:if>
+			      			</td>      			
 			      		</tr>      		
 			      		<tr>
 			      			<td class="t">&nbsp;</td>

@@ -15,14 +15,18 @@
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
-					<h4>Spring Camp 2016 참여기</h4>
 					<p>
+					<c:if test="${empty postList }">
+						<h2>게시글이 존재하지 않습니다.</h2>
+					</c:if>
 					<c:choose>
 						<c:when test="${empty currentPost }">
-							${postList[0].content }
-						</c:when>
+							<h1> ${postList[0].title }</h1><br><hr><br>
+							${postList[0].content } 
+						</c:when> 
 						<c:otherwise>
-							${currentPost }
+							<h1>${currentPost.title }</h1><br><hr><br>
+							${currentPost.content } 
 						</c:otherwise>
 					</c:choose>
 					<p>
@@ -52,14 +56,11 @@
 		</div>
 
 		<div id="navigation">
-			<h2>카테고리</h2>
+			<h2>카테고리!</h2>
 			<ul>		
 			<c:forEach items='${categoryList }' var='vo' varStatus='status'>
 				<li><a href="${pageContext.servletContext.contextPath}/${vo.blogId}/${vo.no}">${vo.name }</a></li>			
 			</c:forEach>
-			<c:if test="${categoryList.size()==0 }">
-				<li>게시글이 존재하지 않습니다.</li>
-			</c:if>
 			</ul>
 		</div> 
 		

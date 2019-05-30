@@ -38,6 +38,7 @@ public class BlogController {
 	@Autowired
 	private FileuploadService fileuploadService;
 	
+	// 블로그 메인
 	@RequestMapping(value = {"","/{pathNo1}","/{pathNo1}/{pathNo2}" })
 	public String blogMain(@PathVariable(value = "userId") String userId,
 						@PathVariable(value = "pathNo1") Optional<Long> pathNo1,
@@ -69,6 +70,7 @@ public class BlogController {
 		return "blog/blog-main";
 	}
 	
+	// 블로그관리 페이지
 	@Auth
 	@RequestMapping(value = {"/admin/basic"})
 	public String blogAdmin(@AuthUser UserVo authUser,
@@ -90,12 +92,12 @@ public class BlogController {
 		return "blog/blog-admin-basic";
 	}
 	
+	// 블로그 정보 수정
 	@Auth
 	@RequestMapping(value = {"/admin/basic/modify"})
 	public String modifyBlogInfo(@AuthUser UserVo authUser,
-								@ModelAttribute @Valid BlogVo blogVo, 
+								@ModelAttribute("blogVo") @Valid BlogVo blogVo, 
 								@PathVariable(value = "userId") String userId,
-								@RequestParam(value="title") String title,
 								@RequestParam(value="file") MultipartFile multipartFile,
 								BindingResult result,
 								Model model) {
@@ -114,16 +116,17 @@ public class BlogController {
 			return "blog/blog-admin-basic";
 		}
 		
-		String url = fileuploadService.restore(multipartFile);
-		BlogVo vo = new BlogVo();
-		vo.setBlogId(userId);
-		vo.setTitle(title);
-		vo.setLogo(url);
-		blogService.modifyBlogInfo(vo);
+		if(!multipartFile.isEmpty()) {
+			String url = fileuploadService.restore(multipartFile);
+			blogVo.setLogo(url);			
+		}
+		blogVo.setBlogId(userId);
+		blogService.modifyBlogInfo(blogVo);
 		
 		return "redirect:/" + userId; 
 	}
 	
+	// 카테고리 수정 페이지
 	@Auth
 	@RequestMapping(value = {"/admin/category"}, method = RequestMethod.GET)
 	public String adminCategory(@AuthUser UserVo authUser,
@@ -144,6 +147,7 @@ public class BlogController {
 		return "blog/blog-admin-category"; 
 	}
 	
+	// 카테고리 수정
 	@Auth
 	@RequestMapping(value = {"/admin/category"}, method = RequestMethod.POST)
 	public String adminCategory(@AuthUser UserVo authUser,
@@ -176,6 +180,7 @@ public class BlogController {
 		return "redirect:/" + userId + "/admin/category"; 
 	}
 	
+	// 카테고리 삭제
 	@Auth
 	@RequestMapping(value = {"/admin/category/delete/{no}"})
 	public String deleteCategory(@AuthUser UserVo authUser,
@@ -196,6 +201,7 @@ public class BlogController {
 		return "redirect:/" + userId + "/admin/category"; 
 	}
 	
+	// 포스트 작성 페이지
 	@Auth
 	@RequestMapping(value = {"/admin/write"}, method = RequestMethod.GET)
 	public String adminWrite(@AuthUser UserVo authUser,
@@ -218,6 +224,7 @@ public class BlogController {
 		return "blog/blog-admin-write"; 
 	}
 	
+	// 포스트 작성
 	@Auth
 	@RequestMapping(value = {"/admin/write"}, method = RequestMethod.POST)
 	public String adminWrite(@AuthUser UserVo authUser,

@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class BlogVo {
 
-	@NotBlank
 	private String blogId;
 	@NotBlank
 	private String title;

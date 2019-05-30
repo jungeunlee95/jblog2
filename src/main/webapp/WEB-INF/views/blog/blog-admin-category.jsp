@@ -13,7 +13,7 @@
 <script> 
 	$(document).ready( function(){
 	    $(".btn_delete").click( function() {
-	        if(confirm("카테고리를 삭제하면 ")) {
+	        if(confirm("카테고리를 삭제하면 하위 글까지 모두 삭제됩니다. 그래도 삭제하시겠습니까?")) {
 	            $(this).parent().click();
 	        } else {
 	            return false;
@@ -38,8 +38,8 @@
 		      		</tr>
 		      		
 		      		<c:forEach items='${categoryList }' var='vo' varStatus='status'>
-						<tr>
-							<td>${vo.no }</td>
+						<tr> 
+							<td>[${status.index+1}]</td>
 							<td>${vo.name }</td>
 							<td>${vo.count }</td>
 							<td>${vo.description }</td>
