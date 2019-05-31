@@ -58,7 +58,7 @@ public class BlogController {
 			categoryNo = pathNo1.get();
 			map.put("postList", blogService.categoryPost(categoryNo));			
 		}else {
-			map.put("postList", blogService.mainPost(userId));			
+			map.put("postList", blogService.mainPost(userId));	
 		}
 		
 		map.putAll(blogService.getBlogInfo(userId));

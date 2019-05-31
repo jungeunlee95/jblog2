@@ -26,7 +26,7 @@
 						</c:when> 
 						<c:otherwise>
 							<h1>${currentPost.title }</h1><br><hr><br>
-							${currentPost.content } 
+							${currentPost.content }
 						</c:otherwise>
 					</c:choose>
 					<p>
